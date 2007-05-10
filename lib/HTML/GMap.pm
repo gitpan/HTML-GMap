@@ -1,8 +1,8 @@
 package HTML::GMap;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-# $Id: GMap.pm,v 1.6 2007/05/09 14:27:22 canaran Exp $
+# $Id: GMap.pm,v 1.7 2007/05/10 12:53:50 canaran Exp $
 
 use warnings;
 use strict;
@@ -2148,7 +2148,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 ACKNOWLEDGEMENTS
 

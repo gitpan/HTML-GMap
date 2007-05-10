@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+our $VERSION = '0.02';
+
+# $Id: html_gmap_piechart_sample,v 1.5 2007/05/10 14:41:26 canaran Exp $
+
 use warnings;
 use strict;
 
@@ -43,15 +47,15 @@ $gmap->display;
 
 =head1 NAME
 
-html_gmap_hires_sample
+html_gmap_piechart_sample - Sample CGI script for HTML::GMap
 
 =head1 SYNOPSIS
 
-html_gmap_hires_sample
+html_gmap_piechart_sample
 
 =head1 DESCRIPTION
 
-Sample code for demonstrating use of HTML::GMap in hires mode.
+Sample code for demonstrating use of HTML::GMap in piechart mode.
 
 =head1 USAGE
 
@@ -65,7 +69,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 ACKNOWLEDGEMENTS
 

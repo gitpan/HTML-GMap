@@ -1,5 +1,9 @@
 Revision history for HTML-GMap
 
+0.02    2007-05-10
+        - Add prerequisites to Makefile.PL
+        - Add version numbers, abstracts to sample code/data
+         
 0.01    2007-05-09 
-        First version.
+        - First version.
 

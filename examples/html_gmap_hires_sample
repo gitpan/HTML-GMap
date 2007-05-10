@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+our $VERSION = '0.02';
+
+# $Id: html_gmap_hires_sample,v 1.5 2007/05/10 14:40:47 canaran Exp $
+
 use warnings;
 use strict;
 
@@ -43,7 +47,7 @@ $gmap->display;
 
 =head1 NAME
 
-html_gmap_hires_sample
+html_gmap_hires_sample - Sample CGI script for HTML::GMap
 
 =head1 SYNOPSIS
 
@@ -65,7 +69,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 ACKNOWLEDGEMENTS
 

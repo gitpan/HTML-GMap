@@ -1,8 +1,8 @@
 package HTML::GMap::Files;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-# $Id: Files.pm,v 1.4 2007/05/08 14:26:18 canaran Exp $
+# $Id: Files.pm,v 1.6 2007/05/10 14:51:52 canaran Exp $
 
 use warnings;
 use strict;
@@ -88,7 +88,7 @@ sub files {
 /*
 Author: Payan Canaran (canaran@cshl.edu)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
-$Id: Files.pm,v 1.4 2007/05/08 14:26:18 canaran Exp $
+$Id: Files.pm,v 1.6 2007/05/10 14:51:52 canaran Exp $
 */
 
 body {
@@ -222,7 +222,7 @@ CONTENT
 <!--
 Author: Payan Canaran (canaran@cshl.edu)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
-$Id: Files.pm,v 1.4 2007/05/08 14:26:18 canaran Exp $
+$Id: Files.pm,v 1.6 2007/05/10 14:51:52 canaran Exp $
 -->
 
 [% cgi_header %]
@@ -391,7 +391,7 @@ CONTENT
     $files{'gmap-main.js'}{'content'} = <<'CONTENT';
 // Author: Payan Canaran (canaran@cshl.edu)
 // Copyright 2006-2007 Cold Spring Harbor Laboratory
-// $Id: Files.pm,v 1.4 2007/05/08 14:26:18 canaran Exp $
+// $Id: Files.pm,v 1.6 2007/05/10 14:51:52 canaran Exp $
 
 // Create and initialize map
 var map = new GMap2(document.getElementById('map'));
@@ -716,7 +716,7 @@ __END__
 
 =head1 NAME
 
-HTML::GMap::Files
+HTML::GMap::Files - File storage for HTML::GMap
 
 =head1 SYNOPSIS
 
@@ -740,7 +740,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 ACKNOWLEDGEMENTS
 
