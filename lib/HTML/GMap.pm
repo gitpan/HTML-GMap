@@ -1,8 +1,8 @@
 package HTML::GMap;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-# $Id: GMap.pm,v 1.7 2007/05/10 12:53:50 canaran Exp $
+# $Id: GMap.pm,v 1.13 2007/06/01 20:36:58 canaran Exp $
 
 use warnings;
 use strict;
@@ -12,7 +12,6 @@ use HTML::GMap::Files;
 use Carp;
 use CGI;
 use CGI::Session;
-use Data::Dumper;
 use DBI;
 use File::Temp qw(tempfile);
 use GD::Graph::pie;
@@ -274,7 +273,7 @@ sub new {
         }
         $self->request_url_template($request_url_template);
     };
-print STDERR ($self);
+
     $self->error($@) if $@;
 
     return $self;
@@ -1924,13 +1923,13 @@ sub _clean_temp_dir {
     my ($self) = @_;
 
     my $temp_dir   = $self->temp_dir;
-    my $session_id = $self->session_id;
+    # my $session_id = $self->session_id;
 
     my @cmds = (
         "find $temp_dir -name \'Legend-icon-*\' -cmin +20 -exec rm -f {} \\;",
-        "find $temp_dir -name \'PieChart-icon-$session_id-*\' -exec rm -f {} \\;",
-        "find $temp_dir -name \'Density-icon-$session_id-*\' -exec rm -f {} \\;",
-        "find $temp_dir -name \'Small-icon-$session_id-*\' -exec rm -f {} \\;",   
+        # "find $temp_dir -name \'PieChart-icon-$session_id-*\' -exec rm -f {} \\;",
+        # "find $temp_dir -name \'Density-icon-$session_id-*\' -exec rm -f {} \\;",
+        # "find $temp_dir -name \'Small-icon-$session_id-*\' -exec rm -f {} \\;",   
         "find $temp_dir -name \'PieChart-icon-*\' -cmin +2 -exec rm -f {} \\;",
         "find $temp_dir -name \'Density-icon-*\' -cmin +2 -exec rm -f {} \\;",
         "find $temp_dir -name \'Small-icon-*\' -cmin +2 -exec rm -f {} \\;",   
@@ -2148,7 +2147,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 ACKNOWLEDGEMENTS
 

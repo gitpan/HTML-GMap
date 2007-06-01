@@ -1,5 +1,9 @@
 Revision history for HTML-GMap
 
+0.03    2007-06-01
+        - Remove debug info
+        - Remove session-based temp file cleaning
+
 0.02    2007-05-10
         - Add prerequisites to Makefile.PL
         - Add version numbers, abstracts to sample code/data

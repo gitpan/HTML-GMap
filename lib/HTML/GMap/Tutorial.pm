@@ -1,15 +1,15 @@
 package HTML::GMap::Tutorial;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-# $Id: Tutorial.pm,v 1.8 2007/05/10 18:17:14 canaran Exp $
+# $Id: Tutorial.pm,v 1.10 2007/05/30 19:01:42 canaran Exp $
 
 use warnings;
 use strict;
 
 =head1 NAME
 
-HTML::GMap::Tutorial - HTML::GMap package tutorial
+HTML::GMap::Tutorial - HTML::GMap distribution tutorial
 
 =head1 DESCRIPTION
 
@@ -443,7 +443,7 @@ Please report them.
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 ACKNOWLEDGEMENTS
 

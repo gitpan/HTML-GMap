@@ -1,13 +1,15 @@
 #!/usr/bin/perl
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-# $Id: html_gmap_piechart_sample,v 1.5 2007/05/10 14:41:26 canaran Exp $
+# $Id: html_gmap_piechart_sample,v 1.7 2007/06/01 19:47:12 canaran Exp $
 
 use warnings;
 use strict;
 
 use HTML::GMap;
+
+my $gmap_key = 'my_gmap_key';
 
 my $gmap = HTML::GMap->new (
     initial_format        => 'xml-piechart',
@@ -36,7 +38,7 @@ my $gmap = HTML::GMap->new (
                     'Specialty #3', 'Specialty #4', 'Specialty #5'],
       insurance => ['all:All', 'Yes', 'No'],
     },
-    gmap_key              => qq[ABQIAAAAGB-Wqdj00NegDlW0aNTPQRTwM0brOpm-All5BF6PoaKBxRWWERQzDpPAzL-zTSiDg2J4QYhRS5jYTg],
+    gmap_key              => $gmap_key,
     temp_dir              => qq[/usr/local/demo/html/demo/tmp],
     temp_dir_eq           => qq[http://localhost:8080/demo/tmp],
 );
@@ -69,7 +71,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 ACKNOWLEDGEMENTS
 
