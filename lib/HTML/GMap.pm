@@ -1,8 +1,8 @@
 package HTML::GMap;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
-# $Id: GMap.pm,v 1.13 2007/06/01 20:36:58 canaran Exp $
+# $Id: GMap.pm,v 1.15 2007/07/02 14:54:06 canaran Exp $
 
 use warnings;
 use strict;
@@ -1949,7 +1949,7 @@ __END__
 
 =head1 NAME
 
-HTML::GMap - Generic Perl infrastructure to build Google Maps displays
+HTML::GMap - Generic framework for building Google Maps displays
 
 =head1 SYNOPSIS
 
@@ -2147,7 +2147,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =head1 ACKNOWLEDGEMENTS
 

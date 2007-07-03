@@ -1,5 +1,8 @@
 Revision history for HTML-GMap
 
+0.04    2007-07-DD
+		- Update abstracts
+
 0.03    2007-06-01
         - Remove debug info
         - Remove session-based temp file cleaning

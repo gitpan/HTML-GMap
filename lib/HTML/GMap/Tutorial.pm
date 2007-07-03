@@ -1,8 +1,8 @@
 package HTML::GMap::Tutorial;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
-# $Id: Tutorial.pm,v 1.10 2007/05/30 19:01:42 canaran Exp $
+# $Id: Tutorial.pm,v 1.11 2007/06/01 21:17:24 canaran Exp $
 
 use warnings;
 use strict;
@@ -443,7 +443,7 @@ Please report them.
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =head1 ACKNOWLEDGEMENTS
 
