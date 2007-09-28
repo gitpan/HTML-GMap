@@ -1,8 +1,8 @@
 package HTML::GMap;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-# $Id: GMap.pm,v 1.15 2007/07/02 14:54:06 canaran Exp $
+# $Id: GMap.pm,v 1.24 2007/09/19 01:48:58 canaran Exp $
 
 use warnings;
 use strict;
@@ -122,11 +122,23 @@ sub new {
           : -73.466566;
         $self->center_longitude($center_longitude);
 
+        my $center_zoom =
+          exists $params{center_zoom}
+          ? $params{center_zoom}
+          : 4;
+        $self->center_zoom($center_zoom);
+
         $self->messages($params{messages});
 
         $self->header($params{header});
 
         $self->footer($params{footer});
+
+        $self->hires_shape_keys($params{hires_shape_keys});
+        $self->hires_shape_values($params{hires_shape_values});
+
+        $self->hires_color_keys($params{hires_color_keys});
+        $self->hires_color_values($params{hires_color_values});
 
         my $image_height_pix =
           exists $params{image_height_pix} ? $params{image_height_pix} : 600;
@@ -378,6 +390,24 @@ sub process_markers_post_cluster {
 }
 
 # Function  :
+# Arguments : $data_count, $max_data_count, $min_chart_size, $max_chart_size
+# Returns   : $piechart_icon_size
+# Notes     : None specified
+
+sub piechart_icon_size {
+    my ($self, $data_count, $max_data_count, $min_chart_size, $max_chart_size) = @_;    
+    
+    my $piechart_icon_size = $self->_round(
+        $min_chart_size + (
+            ($data_count / $max_data_count) *
+              ($max_chart_size - $min_chart_size)
+        )
+    );
+    
+    return $piechart_icon_size;
+}    
+
+# Function  :
 # Arguments : \@info ([$icon_url, $label, $count], ...)
 # Returns   : $html
 # Notes     :
@@ -411,7 +441,6 @@ sub generate_piechart_legend_html {
     $html .= qq[<td colspan="2">
                 This section displays data points in current view and
                 is updated as the map is moved and/or filtering is applied.<br/>
-                &nbsp;
                 </td>\n];
     $html .= qq[</tr>\n];
 
@@ -419,7 +448,7 @@ sub generate_piechart_legend_html {
         my ($icon_url, $label, $count) = @$info;
         $html .= qq[<tr>\n];
         $html .= qq[<td align="left">
-                        <img src="$icon_url"/>&nbsp;&nbsp;$label ($count points)
+                        <img src="$icon_url"/> $label ($count points)
                     </td>\n];
         $html .= qq[</tr>\n];
     }
@@ -495,7 +524,6 @@ sub generate_hires_legend_html {
     $html .= qq[<tr>\n];
     $html .= qq[<td colspan="2">
                 $legend_info<br/>
-                &nbsp;
                 </td>\n];
     $html .= qq[</tr>\n];
 
@@ -505,7 +533,7 @@ sub generate_hires_legend_html {
         my $text      = $legend_marker->{text};
         $html .= qq[<tr>\n];
         $html .= qq[<td align="left">
-                 <img height="$icon_size" src="$icon_url"/>&nbsp;&nbsp;$text
+                 <img height="$icon_size" src="$icon_url"/> $text
                  </td>\n];
         $html .= qq[</tr>\n];
     }
@@ -535,7 +563,7 @@ sub generate_piechart_details_html {
     $html .= qq[<table>\n];
     $html .= qq[<tr>\n];
     $html .= qq[<th align="left" width="50%">
-                Total Count</th><th align="left">:&nbsp;$total_count
+                Total Count</th><th align="left">: $total_count
                 </th>\n];
     $html .= qq[</tr>\n];
     $html .= qq[</table>\n];
@@ -556,9 +584,9 @@ sub generate_piechart_details_html {
 
         $html .= qq[<tr>\n];
         $html .= qq[<td align="left">
-                    <img src="$icon_url"/>&nbsp;&nbsp;$label ($count points)
+                    <img src="$icon_url"/> $label ($count points)
                     </td>\n];
-        $html .= qq[<td align="right">&nbsp;&nbsp;$rounded_percent %</td>\n];
+        $html .= qq[<td align="right"> $rounded_percent %</td>\n];
         $html .= qq[</tr>\n];
     }
     $html .= qq[</table>\n];
@@ -604,7 +632,7 @@ sub generate_hires_details_html {
     $html .= qq[<table>\n];
     $html .= qq[<tr>\n];
     $html .= qq[<th align="left" width="50%">Total Count</th>
-                <th align="left">:&nbsp;$total_count</th>\n];
+                <th align="left">: $total_count</th>\n];
     $html .= qq[</tr>\n];
     $html .= qq[</table>\n];
 
@@ -621,9 +649,9 @@ sub generate_hires_details_html {
 
         $html .= qq[<tr>\n];
         $html .= qq[<td align="left">
-                    <img src="$icon_url"/>&nbsp;&nbsp;$text ($count points)
+                    <img src="$icon_url"/> $text ($count points)
                     </td>\n];
-        $html .= qq[<td align="right">&nbsp;&nbsp;$rounded_percent%</td>\n];
+        $html .= qq[<td align="right"> $rounded_percent%</td>\n];
         $html .= qq[</tr>\n];
     }
     $html .= qq[</table>\n];
@@ -663,6 +691,12 @@ sub center_longitude {
     my ($self, $value) = @_;
     $self->{center_longitude} = $value if @_ > 1;
     return $self->{center_longitude};
+}
+
+sub center_zoom {
+    my ($self, $value) = @_;
+    $self->{center_zoom} = $value if @_ > 1;
+    return $self->{center_zoom};
 }
 
 sub cgi {
@@ -741,6 +775,30 @@ sub gmap_main_js_file {
     my ($self, $value) = @_;
     $self->{gmap_main_js_file} = $value if @_ > 1;
     return $self->{gmap_main_js_file};
+}
+
+sub hires_shape_keys {
+    my ($self, $value) = @_;
+    $self->{hires_shape_keys} = $value if @_ > 1;
+    return $self->{hires_shape_keys};
+}
+
+sub hires_shape_values {
+    my ($self, $value) = @_;
+    $self->{hires_shape_values} = $value if @_ > 1;
+    return $self->{hires_shape_values};
+}
+
+sub hires_color_keys {
+    my ($self, $value) = @_;
+    $self->{hires_color_keys} = $value if @_ > 1;
+    return $self->{hires_color_keys};
+}
+
+sub hires_color_values {
+    my ($self, $value) = @_;
+    $self->{hires_color_values} = $value if @_ > 1;
+    return $self->{hires_color_values};
 }
 
 sub header {
@@ -898,6 +956,10 @@ sub _display_js_page {
       defined $self->center_longitude
       ? $self->center_longitude
       : -73.466566;
+    my $center_zoom =
+      defined $self->center_zoom
+      ? $self->center_zoom
+      : 4;
     my $param_fields = join(
         ", ",
         map { qq["] . $_->{name} . qq["] } @param_fields_with_values
@@ -934,6 +996,7 @@ sub _display_js_page {
         # var_store variables
         center_latitude  => $center_latitude,
         center_longitude => $center_longitude,
+        center_zoom      => $center_zoom,
         image_height_pix => $self->image_height_pix,
         tile_height_pix  => $self->tile_height_pix,
         image_width_pix  => $self->image_width_pix,
@@ -941,6 +1004,7 @@ sub _display_js_page {
         param_fields     => $param_fields,
         url_template     => $self->request_url_template,
         cluster_field    => $self->cluster_field,
+        draw_grid        => $self->initial_format eq 'xml-piechart' ? 1 : 0,
     );
 
     my $template = Template->new(INCLUDE_PATH => $self->install_dir);
@@ -1134,9 +1198,9 @@ sub _generate_hires_xml_data {
         my $density_icon_prefix = "Density-icon-$session_id";
         my $icon                = GD::Icons->new(
             shape_keys   => [":default"],
-            shape_values => ["_padded-square"],
+            shape_values => ["_large_square"],
             color_keys   => [":default"],
-            color_values => ["Orange"],
+            color_values => ["#0009ff"],
             sval_keys    => [0 .. $lowres_legend_marker_count - 1],
             icon_dir     => $temp_dir,
             icon_prefix  => $density_icon_prefix,
@@ -1196,7 +1260,7 @@ sub _generate_hires_xml_data {
 
         my $meta_data_ref = {
             messages_by_default => $self->messages,
-            details_by_default  => '[Click icons for details ...]',
+            details_by_default  => '[Click an icon for details ...]',
             legend_by_default   => $legend,
         };
         push(@{$xml_ref->{meta_data}}, $meta_data_ref);
@@ -1206,21 +1270,21 @@ sub _generate_hires_xml_data {
     else {
         $self->_add_hires_icon_urls($markers_ref);
 
-        my $multiples_icon_prefix = "Multiple-icon-$session_id";
-        my $icon                  = GD::Icons->new(
-            shape_keys   => [":default"],
-            shape_values => ["_letter-m"],
-            color_keys   => [":default"],
-            color_values => ["Blue"],
-            sval_keys    => [":default"],
-            sval_values  => [":default"],
-            icon_dir     => $temp_dir,
-            icon_prefix  => $multiples_icon_prefix,
-        );
-        $icon->generate_icons;
-
-        my $multiples_icon_url =
-          "$temp_dir_eq/" . $icon->icon(':default', ':default', ':default');
+#        my $multiples_icon_prefix = "Multiple-icon-$session_id";
+#        my $icon                  = GD::Icons->new(
+#            shape_keys   => [":default"],
+#            shape_values => ["_letter-m"],
+#            color_keys   => [":default"],
+#            color_values => ["Blue"],
+#            sval_keys    => [":default"],
+#            sval_values  => [":default"],
+#            icon_dir     => $temp_dir,
+#            icon_prefix  => $multiples_icon_prefix,
+#        );
+#        $icon->generate_icons;
+#
+#        my $multiples_icon_url =
+#          "$temp_dir_eq/" . $icon->icon(':default', ':default', ':default');
 
         foreach my $key (keys %{$markers_ref}) {
             my ($latitude, $longitude) = split(':', $key);
@@ -1229,8 +1293,28 @@ sub _generate_hires_xml_data {
 
             my $data_count = scalar(@$data_ref);
 
-            my $icon_size = 11;
+            my $icon_size = $data_count > 1 ? 14 : 11;
 
+            my $multiples_icon_url;
+            
+            if ($data_count > 1) {
+                my $multiples_icon_prefix = "Multiple-icon-$data_count-$session_id";
+                my $icon = GD::Icons->new(
+                    alpha        => 30,
+                    shape_keys   => ["Multiple:$data_count"],
+                    shape_values => ["_number-flag"],
+                    color_keys   => [":default"],
+                    color_values => ["#c1caff"],
+                    sval_keys    => [":default"],
+                    sval_values  => [":default"],
+                    icon_dir     => $temp_dir,
+                    icon_prefix  => $multiples_icon_prefix,
+                );
+                $icon->generate_icons;
+                $multiples_icon_url =
+                    "$temp_dir_eq/" . $icon->icon("Multiple:$data_count", ':default', ':default');
+            }                
+            
             my $icon_url =
                 $data_count > 1
               ? $multiples_icon_url
@@ -1277,6 +1361,12 @@ sub _add_hires_icon_urls {
     my $legend_field2 = $self->legend_field2;
     my $session       = $self->session;
 
+    my $hires_shape_keys   = $self->hires_shape_keys;
+    my $hires_shape_values = $self->hires_shape_values;
+    
+    my $hires_color_keys   = $self->hires_color_keys;
+    my $hires_color_values = $self->hires_color_values;
+
     my $temp_dir    = $self->temp_dir;
     my $temp_dir_eq = $self->temp_dir_eq;
     my $session_id  = $self->session_id;
@@ -1298,11 +1388,13 @@ sub _add_hires_icon_urls {
 
     my $small_icon_prefix = "Small-icon-$session_id";
     my $icon              = GD::Icons->new(
-        shape_keys  => \@legend_field1_values,
-        color_keys  => \@legend_field2_values,
-        sval_keys   => [":default"],
-        icon_dir    => $temp_dir,
-        icon_prefix => $small_icon_prefix,
+        color_keys   => $hires_color_keys ? $hires_color_keys : \@legend_field2_values,
+        color_values => $hires_color_values,
+        shape_keys   => $hires_shape_keys ? $hires_shape_keys : \@legend_field1_values,
+        shape_values => $hires_shape_values,
+        sval_keys    => [":default"],
+        icon_dir     => $temp_dir,
+        icon_prefix  => $small_icon_prefix,
     );
     $icon->generate_icons;
 
@@ -1312,7 +1404,7 @@ sub _add_hires_icon_urls {
             $row_ref->{icon_url} = "$temp_dir_eq/"
               . $icon->icon(
                 $row_ref->{$legend_field1},
-                $row_ref->{$legend_field2}, ':default'
+                $row_ref->{$legend_field2}, ':default' # GD::Icons uses first color, then shape
               );
         }
     }
@@ -1497,7 +1589,7 @@ sub _generate_piechart_xml_data {
 
     my $meta_data_ref = {
         messages_by_default => $self->messages,
-        details_by_default  => '[Click pie charts for details ...]',
+        details_by_default  => '[Click a pie chart for details ...]',
         legend_by_default   => $legend
     };
     push(@{$xml_ref->{meta_data}}, $meta_data_ref);
@@ -1684,21 +1776,15 @@ sub _make_piechart_icon {
     # Get data count
     my $data_count = $self->_total(@{$data_ref->[1]});
 
-    my $max_chart_size = 50;
-    my $min_chart_size = 20;
+    my $max_chart_size = 50; # This can go into constructor
+    my $min_chart_size = 20; # This can go into constructor
 
-    my $effective_data_count =
-      $data_count <= $max_data_count ? $data_count : $max_data_count;
-
-    my $chart_size = $self->_round(
-        $min_chart_size + (
-            ($data_count / $max_data_count) *
-              ($max_chart_size - $min_chart_size)
-        )
-    );
-
+    my $piechart_icon_size = $self->piechart_icon_size( # This method can be overridden
+        $data_count, $max_data_count, $min_chart_size, $max_chart_size
+    );    
+    
     # Generate pie chart and render it as a GD object
-    my $graph = GD::Graph::pie->new($chart_size, $chart_size)
+    my $graph = GD::Graph::pie->new($piechart_icon_size, $piechart_icon_size)
       or $self->error("Cannot create an GD::Graph object!");
 
     $graph->set(
@@ -1733,7 +1819,7 @@ sub _make_piechart_icon {
     my ($icon_file_name) = $icon_file =~ /([^\/]+)$/;
     my $icon_url = "$temp_dir_eq/$icon_file_name";
 
-    return ($icon_url, $chart_size);
+    return ($icon_url, $piechart_icon_size);
 }
 
 # Function  :
@@ -1889,7 +1975,6 @@ sub _colors {
       lgreen
       cyan
       red
-      dgray
       gold
       lred
       pink
@@ -1907,7 +1992,6 @@ sub _colors {
       dred
       blue
       dblue
-      black
       green
     );
 
@@ -2095,6 +2179,10 @@ The following parameters are optional.
  image_width_pix       Width of map in pixels         scalar  600
  tile_height_pix       Height of tiles in pixels      scalar  60
  tile_width_pix        Width of tiles in pixels       scalar  60
+ hires_shape_values    Default shape values           arrayref undef
+                       (Contained in GD::Icons)
+ hires_color_values    Default color values           arrayref undef
+                       (Contained in GD::Icons)
 
 =head2 Group 3 - Internal methods
 
@@ -2147,7 +2235,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =head1 ACKNOWLEDGEMENTS
 

@@ -1,6 +1,18 @@
 Revision history for HTML-GMap
 
-0.04    2007-07-DD
+0.05    2007-09-28
+        - Persistent color/shape for hires mode
+        - Add large zoom control
+        - Add zoom level to URL
+        - Lower zoom limit to 2
+        - More visible density icons
+        - Tableize framework, remove &nbsp; (for Safari)
+        - Parameterize center zoom level
+        - Make piechart size a method that can be overridden
+        - Temp addition to work around disappearing grid
+        - Disable grid for hires mode
+
+0.04    2007-07-03
 		- Update abstracts
 
 0.03    2007-06-01

@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-# $Id: html_gmap_piechart_sample,v 1.8 2007/06/01 21:17:24 canaran Exp $
+# $Id: html_gmap_piechart_sample,v 1.9 2007/07/27 15:38:36 canaran Exp $
 
 use warnings;
 use strict;
@@ -71,7 +71,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =head1 ACKNOWLEDGEMENTS
 

@@ -1,8 +1,8 @@
 package HTML::GMap::Files;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-# $Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
+# $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 
 use warnings;
 use strict;
@@ -88,7 +88,7 @@ sub files {
 /*
 Author: Payan Canaran (canaran@cshl.edu)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
-$Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
+$Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 */
 
 body {
@@ -96,110 +96,63 @@ body {
     font-family: arial;
 }    
 
-div {
-  border: 0px solid;
-  font-size: 13px;
-}
-
 th {
   font-size: 12px;
 }
 
 td {
   font-size: 12px;
+  vertical-align: top;
 }
 
-div.container {
+table.container {
   border: 1px dashed #333;
   background-color: #F5F5DC;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-div.spacer {
-  clear: both;
-  height: 2px;
-  display: inline;
-}
-
-div.left_column {
-  float: left;
-  display: inline;
   text-align: left;
-}
-
-div.center_column {
-  float: left;
-  display: inline;
-}
-
-div.right_column {
-  float: left;
-  width: 250px;
-  display: inline;
-  text-align: left;
+  font-size: 13px;
 }
 
 div.sub_header {
-  clear: both;
   padding: 4px;
   font-size: 14px;
   font-weight: bold;
-  display: inline;
+}
+
+div.status {
+  padding: 4px;
+  width: 250px;
+}
+
+div.filter {
+  padding: 4px;
+  width: 240px;
+}
+
+div.messages {
+ padding: 4px;
+ width: 250px;
+ overflow: auto;
+}
+
+div.details_info {
+  padding: 4px;
+  height: 110px;
+  width: 240px;
+  overflow: auto;
+}
+
+div.legend_info {
+  padding: 4px;
+  height: 490px;
+  width: 180px;
+  font-weight: bold;
+  overflow: auto;
 }
 
 div.float_right {
   clear: right;
   display: inline;
 }
-
-
-div.map {
-  float: left;
-  display: inline;
-}
-
-
-div.status {
-  float: left;
-  padding: 4px;
-  width: 250px;
-  display: inline;
-}
-
-div.filter {
-  float: left;
-  padding: 4px;
-  width: 240px;
-  display: inline;
-}
-
-div.messages {
- float: left;
- padding: 4px;
- width: 250px;
- overflow: auto;
- display: inline;
-}
-
-div.details_info {
-  float: left;
-  padding: 4px;
-  height: 110px;
-  width: 240px;
-  overflow: auto;
-  display: inline;
-}
-
-div.legend_info {
-  float: left;
-  padding: 4px;
-  height: 490px;
-  width: 180px;
-  overflow: auto;
-  display: inline;
-}
-
 
 div.hidden {
   visibility: hidden;
@@ -222,7 +175,7 @@ CONTENT
 <!--
 Author: Payan Canaran (canaran@cshl.edu)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
-$Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
+$Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 -->
 
 [% cgi_header %]
@@ -247,109 +200,98 @@ $Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
 
     <h1>[% page_title %]</h1>
 
-    <div class="container" style="height: [% container_height_pix %]px; width: [% container_width_pix %]px">
-        <div class="spacer">&nbsp;</div>
-
-        <div class="left_column">
-            <div class="sub_header">
-                <div class="sub_header">Legend:&nbsp;</div>
+    <table align="center" class="container">
+        <tr>
+            <td>
+                <div class="sub_header">Legend: </div>
                 <div id="legend" class="legend_info"></div>
                 <p/>
                 <div id="legend_message"></div>
-            </div>
-        </div>
+            </td>
+        
+            <td>
+                <div id="map" style="height: [% image_height_pix %]px; width: [% image_width_pix %]px">
+                Loading map ...
+                </div>
+            </td>
 
-        <div class="center_column" style="width: [% center_width_pix %]px">
-            <div id="map" class="map" style="height: [% image_height_pix %]px; width: [% image_width_pix %]px">
-            Loading map ...
-            </div>
-        </div>
-
-        <div class="right_column">
-            <div>
-                <div class="sub_header">Status:&nbsp;</div>
+            <td>
+                <div class="sub_header">Status: </div>
                 <div id="status" class="status">Initializing ...</div>
-            </div>
 
-            <div>
-                <div class="spacer">&nbsp;</div>
-                <form id="filter">
-                <div class="sub_header">Filter:&nbsp;</div>
+                <div>
+                    <form id="filter">
+                    <div class="sub_header">Filter: </div>
 
-                <div class="spacer">&nbsp;</div>
-                <div class="spacer">&nbsp;</div>
-
-                <div class="filter">
-                    <table width="100%">
-                    [% FOREACH field = param_fields_with_values %]
-                        <tr>
-                        <!-- Param [% field.name %] -->
-                        <td align="left">
-                            <font class="bold">[% field.display %]:</font>
-                        </td>
-                        <td align="right">
-                            <select id="[% field.name %]" name="[% field.name %]">
-                                [% FOREACH value = field.values %]
-                                    <option value="[% value.param %]">[% value.display %]</option>
-                                [% END %]
-                            </select>
-                        </td>
-                    [% END %]
-                    </tr>
-                    </table>
-                    <div id="cluster_slices_group" class="visible">
-                        [% IF display_cluster_slices %]
+                    <div class="filter">
                         <table width="100%">
+                            [% FOREACH field = param_fields_with_values %]
                             <tr>
+                                <!-- Param [% field.name %] -->
                                 <td align="left">
-                                    <input id="cluster_slices" type="checkbox" name="cluster_slices"></input>
-                                    Cluster rare values:
+                                    <font class="bold">[% field.display %]:</font>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td align="right">
-                                    (less than
-                                    <input id="cluster_slices_value" type="text" name="cluster_slices_value" size="2" value="2">
-                                    <select id="cluster_slices_by" name="cluster_slices_by">
-                                        <option value="percent" selected="1">%</option>
-                                        <option value="count">pt</option>
+                                    <select id="[% field.name %]" name="[% field.name %]">
+                                        [% FOREACH value = field.values %]
+                                        <option value="[% value.param %]">[% value.display %]</option>
+                                        [% END %]
                                     </select>
-                                    per tile)
                                 </td>
+                            [% END %]
                             </tr>
                         </table>
-                        [% END %]
+                   
+                        <div id="cluster_slices_group" class="visible">
+                            [% IF display_cluster_slices %]
+                            <table width="100%">
+                                <tr>
+                                    <td align="left">
+                                        <input id="cluster_slices" type="checkbox" name="cluster_slices"></input>
+                                        Cluster rare values:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        (less than
+                                        <input id="cluster_slices_value" type="text" name="cluster_slices_value" size="2" value="2">
+                                        <select id="cluster_slices_by" name="cluster_slices_by">
+                                            <option value="percent" selected="1">%</option>
+                                            <option value="count">pt</option>
+                                        </select>
+                                        per tile)
+                                    </td>
+                                </tr>
+                            </table>
+                            [% END %]
+                        </div>
+    
+                        <div>
+                        <table width="100%">
+                            <tr>
+                                <td align="right">
+                                    <input type="button" name="Filter" value="Filter" onClick="doRefresh()"/>
+                                </td>
+                            </tr>       
+                        </table>    
+                        </div>
                     </div>
-
-                    <div>
-                    <table width="100%">
-                        <tr>
-                            <td align="right">
-                                <input type="button" name="Filter" value="Filter" onClick="doRefresh()"/>
-                            </td>
-                        </tr>       
-                    </table>    
-                    </div>
+                    </form>    
                 </div>
 
-                </form>    
+                <div>
+                    <div class="sub_header">Details: </div>
+                    <div id="details" class="details_info"></div>
+                </div>
 
-            </div>
-
-            <div>
-                <div class="sub_header">Details:&nbsp;</div>
-                <div id="details" class="details_info"></div>
-            </div>
-
-            <div>
-                <div class="sub_header">Messages:&nbsp;</div>
-                <div id="messages" class="messages">[% messages %]</div>            
-            </div>
-        </div>
-
-        <div class="spacer">&nbsp;</div>
-    </div>
-
+                <div>
+                    <div class="sub_header">Messages: </div>
+                    <div id="messages" class="messages">[% messages %]</div>            
+                </div>
+            </td>
+        </tr>
+    </table>
+    
     <div id="debug">
     </div>
 
@@ -366,13 +308,15 @@ $Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
         var varStore = {
             centerLat      :'[% center_latitude %]',
             centerLng      :'[% center_longitude %]',
+            centerZoom     :[% center_zoom %],
             imageHeightPix :'[% image_height_pix %]',
             tileHeightPix  :'[% tile_height_pix %]',
             imageWidthPix  :'[% image_width_pix %]',
             tileWidthPix   :'[% tile_width_pix %]',
             queryParams    :[[% param_fields %]], // This must be an array
             urlTemplate    :'[% url_template %]',
-            clusterField   :'[% cluster_field %]'
+            clusterField   :'[% cluster_field %]',
+            drawGrid       :'[% draw_grid %]'
         };
     </script>
 
@@ -391,18 +335,20 @@ CONTENT
     $files{'gmap-main.js'}{'content'} = <<'CONTENT';
 // Author: Payan Canaran (canaran@cshl.edu)
 // Copyright 2006-2007 Cold Spring Harbor Laboratory
-// $Id: Files.pm,v 1.8 2007/06/01 21:17:24 canaran Exp $
+// $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 
 // Create and initialize map
 var map = new GMap2(document.getElementById('map'));
 
-var centerLat = varStore.centerLat;
-var centerLng = varStore.centerLng;
+var centerLat  = varStore.centerLat;
+var centerLng  = varStore.centerLng;
+var centerZoom = varStore.centerZoom;
 
-map.addControl(new GSmallZoomControl());
+// map.addControl(new GSmallZoomControl());
+map.addControl(new GLargeMapControl());
 map.addControl(new GMapTypeControl());
 map.addControl(new GScaleControl());
-map.setCenter(new GLatLng(centerLat, centerLng), 4);
+map.setCenter(new GLatLng(centerLat, centerLng), centerZoom);
 
 // Register map events
 GEvent.addListener(map, "movestart", startRefresh);
@@ -461,6 +407,9 @@ function constructUrl() {
         url += "&cluster_slices_by="    + escape(document.getElementById('cluster_slices_by').value);
     };
 
+    //Add zoom level
+    url += "&zoom_level=" + map.getZoom()
+    
     // document.getElementById("debug").innerHTML = url;
 
     return url;
@@ -521,17 +470,20 @@ function addLatLngLines() {
             new GLatLng(latSouth, lngNth)
             ], "#ff8b04", 2);
         map.addOverlay(polyline);
+        map.addOverlay(polyline); // Every other polyline is skipped, a potential bug; observe 8/10/07        
     }   
 
     for (var n = 1; n < numberOfVerticalTiles; n++) {
         // Draw latitudes
         var latNth = latSouth + n * tileSideLat;
+
         var polyline = new GPolyline([
             new GLatLng(latNth, lngWest),
             new GLatLng(latNth, lngMid),   // A mid point is needed to ensure direction of the line is correct
             new GLatLng(latNth, lngEast)
             ], "#ff8b04", 2);
         map.addOverlay(polyline);
+        map.addOverlay(polyline); // Every other polyline is skipped, a potential bug; observe 8/10/07       
     }
 
 // document.getElementById("debug").innerHTML = 'zoom:' + map.getZoom();
@@ -552,6 +504,8 @@ function startRefresh() {
 
 // Refresh display (clear overlays, send an AJAX request, process request)
 function doRefresh(event) {
+    var drawGrid = varStore.drawGrid;
+
     // Clear existing overlays
     map.clearOverlays();
 
@@ -563,7 +517,10 @@ function doRefresh(event) {
     // Query database, pass results on for parsing
     GDownloadUrl(requestUrl, processRequest); // No parentheses
 
-    addLatLngLines();
+    // Draw grid
+    if (drawGrid > 0) {
+        addLatLngLines();
+    }    
 }
 
 // Place markers on the map
@@ -669,8 +626,8 @@ function toggleClusterSlicesGroup(event) {
 function limitZoom() {
     var zoom = map.getZoom();
 
-    if (zoom < 3) {
-        map.setZoom(3);
+    if (zoom < 2) {
+        map.setZoom(2);
     }
 }
 
@@ -740,7 +697,7 @@ Payan Canaran <canaran@cshl.edu>
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =head1 ACKNOWLEDGEMENTS
 
