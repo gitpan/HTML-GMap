@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # $Id: html_gmap_hires_sample,v 1.9 2007/07/27 15:38:36 canaran Exp $
 
@@ -65,13 +65,13 @@ Please refer to HTML::GMap::Tutorial for details on this script.
 
 =head1 AUTHOR
 
-Payan Canaran <canaran@cshl.edu>
+Payan Canaran <pcanaran@cpan.org>
 
 =head1 BUGS
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =head1 ACKNOWLEDGEMENTS
 

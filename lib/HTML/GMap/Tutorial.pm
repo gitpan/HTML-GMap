@@ -1,6 +1,6 @@
 package HTML::GMap::Tutorial;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # $Id: Tutorial.pm,v 1.12 2007/07/27 15:38:36 canaran Exp $
 
@@ -435,7 +435,7 @@ Please refer to HTML::GMap for a list of all attributes and methods and sub-clas
 
 =head1 AUTHOR
 
-Payan Canaran <canaran@cshl.edu>
+Payan Canaran <pcanaran@cpan.org>
 
 =head1 BUGS
 
@@ -443,7 +443,7 @@ Please report them.
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =head1 ACKNOWLEDGEMENTS
 

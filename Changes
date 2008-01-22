@@ -1,5 +1,9 @@
 Revision history for HTML-GMap
 
+0.06    2008-01-21
+        - Update email address
+        - Explicitly specify keyattr for XML out
+
 0.05    2007-09-28
         - Persistent color/shape for hires mode
         - Add large zoom control

@@ -1,7 +1,7 @@
 -- Sample SQL table and data for HTML::GMap
--- Author: Payan Canaran <canaran@cshl.edu>
+-- Author: Payan Canaran <pcanaran@cpan.org>
 -- Copyright (c) 2006-2007 Cold Spring Harbor Laboratory
--- Version 0.05
+-- Version 0.06
 
 DROP TABLE IF EXISTS `html_gmap_hires_sample`;
 

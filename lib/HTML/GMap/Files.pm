@@ -1,6 +1,6 @@
 package HTML::GMap::Files;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 
@@ -86,7 +86,7 @@ sub files {
     $files{'gmap-main.css'}{'type'}    = 'ascii';
     $files{'gmap-main.css'}{'content'} = <<'CONTENT';
 /*
-Author: Payan Canaran (canaran@cshl.edu)
+Author: Payan Canaran (pcanaran@cpan.org)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
 $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 */
@@ -173,7 +173,7 @@ CONTENT
     $files{'gmap-main.html'}{'type'}    = 'ascii';
     $files{'gmap-main.html'}{'content'} = <<'CONTENT';
 <!--
-Author: Payan Canaran (canaran@cshl.edu)
+Author: Payan Canaran (pcanaran@cpan.org)
 Copyright 2006-2007 Cold Spring Harbor Laboratory
 $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 -->
@@ -333,7 +333,7 @@ CONTENT
     
     $files{'gmap-main.js'}{'type'}    = 'ascii';
     $files{'gmap-main.js'}{'content'} = <<'CONTENT';
-// Author: Payan Canaran (canaran@cshl.edu)
+// Author: Payan Canaran (pcanaran@cpan.org)
 // Copyright 2006-2007 Cold Spring Harbor Laboratory
 // $Id: Files.pm,v 1.13 2007/09/19 01:49:12 canaran Exp $
 
@@ -691,13 +691,13 @@ HTML::GMap::Tutorial for detailed usage information.
 
 =head1 AUTHOR
 
-Payan Canaran <canaran@cshl.edu>
+Payan Canaran <pcanaran@cpan.org>
 
 =head1 BUGS
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =head1 ACKNOWLEDGEMENTS
 

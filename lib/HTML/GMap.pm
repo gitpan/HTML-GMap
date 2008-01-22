@@ -1,6 +1,6 @@
 package HTML::GMap;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # $Id: GMap.pm,v 1.24 2007/09/19 01:48:58 canaran Exp $
 
@@ -1128,7 +1128,7 @@ sub _serve_xml_data {
     #                        lc($h);
     #                        } @base_output_headers;
 
-    my $formatted_data = XMLout($xml_ref);
+    my $formatted_data = XMLout($xml_ref, keyattr => []);
 
     # Print XML data out
     print CGI::header(-type => 'text/plain');
@@ -2229,13 +2229,13 @@ Alternatively, a set of databases can be specified and can be addressed by "data
 
 =head1 AUTHOR
 
-Payan Canaran <canaran@cshl.edu>
+Payan Canaran <pcanaran@cpan.org>
 
 =head1 BUGS
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =head1 ACKNOWLEDGEMENTS
 

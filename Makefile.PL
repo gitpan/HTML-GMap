@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME                => 'HTML::GMap',
-    AUTHOR              => 'Payan Canaran <canaran@cshl.edu>',
+    AUTHOR              => 'Payan Canaran <pcanaran@cpan.org>',
     VERSION_FROM        => 'lib/HTML/GMap.pm',
     ABSTRACT_FROM       => 'lib/HTML/GMap.pm',
     PL_FILES            => {},
